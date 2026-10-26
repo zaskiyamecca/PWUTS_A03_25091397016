@@ -1,0 +1,50 @@
+<!-- Fragmen halaman: Denah & Ketersediaan Meja (dimuat lewat Ajax ke #content) -->
+<div class="container">
+  <div class="page-head">
+    <h1>Denah &amp; Ketersediaan Meja</h1>
+    <p>Pilih tanggal, jam, dan jumlah tamu. Warna meja menyesuaikan jadwal reservasi yang sudah ada. Ketuk meja hijau untuk melanjutkan reservasi.</p>
+  </div>
+
+  <section class="card" aria-label="Filter ketersediaan">
+    <div class="filter-bar">
+      <div>
+        <label class="lbl" for="fDate">Tanggal</label>
+        <input type="date" id="fDate">
+      </div>
+      <div>
+        <label class="lbl" for="fTime">Jam mulai</label>
+        <select id="fTime"></select>
+      </div>
+      <div>
+        <label class="lbl" for="fPax">Jumlah tamu</label>
+        <input type="number" id="fPax" min="1" max="12" value="2">
+      </div>
+      <div>
+        <button type="button" class="btn btn-outline" id="btnNow" style="width:100%">Waktu terdekat</button>
+      </div>
+    </div>
+    <p class="hint" id="fSummary" style="margin:.8rem 0 0"></p>
+  </section>
+
+  <div class="tabs" role="tablist" id="areaTabs" aria-label="Pilih area"></div>
+
+  <div class="floor-layout">
+    <div>
+      <div class="legend" aria-label="Keterangan warna">
+        <span class="l-available">Kosong</span>
+        <span class="l-reserved">Direservasi</span>
+        <span class="l-occupied">Terisi</span>
+        <span class="l-small">Kapasitas kurang</span>
+      </div>
+      <div class="floor">
+        <div class="stats" id="areaStats"></div>
+        <div class="table-grid" id="tableGrid"></div>
+      </div>
+    </div>
+
+    <aside class="card side-panel" aria-live="polite" id="sidePanel">
+      <h3>Detail meja</h3>
+      <p class="muted">Pilih salah satu meja pada denah untuk melihat kapasitas dan jadwalnya.</p>
+    </aside>
+  </div>
+</div>

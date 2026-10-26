@@ -1,0 +1,125 @@
+<!-- Fragmen halaman: Form Reservasi & Pre-order (dimuat lewat Ajax ke #content) -->
+<div class="container">
+  <div class="page-head">
+    <h1>Reservasi &amp; Pre-order Menu</h1>
+    <p>Lengkapi data berikut. Reservasi akan berstatus <em>pending</em> sampai diverifikasi kasir. Kolom bertanda <span class="req">*</span> wajib diisi.</p>
+  </div>
+
+  <div class="res-layout">
+
+    <div>
+      <!-- ===== FORM ===== -->
+      <form id="formReservasi" class="card" action="proses_reservasi.php" method="post" novalidate>
+        <div id="formAlert"></div>
+
+        <fieldset>
+          <legend>1. Data pemesan</legend>
+          <div class="form-grid">
+            <div class="field full" data-field="guest_name">
+              <label class="lbl" for="guest_name">Nama tamu <span class="req">*</span></label>
+              <input type="text" id="guest_name" name="guest_name" maxlength="100" autocomplete="name" placeholder="Contoh: Budi Santoso">
+              <div class="err"></div>
+            </div>
+            <div class="field" data-field="phone">
+              <label class="lbl" for="phone">No. WhatsApp / telepon <span class="req">*</span></label>
+              <input type="tel" id="phone" name="phone" maxlength="16" inputmode="tel" autocomplete="tel" placeholder="08123456789">
+              <div class="err"></div>
+            </div>
+            <div class="field" data-field="email">
+              <label class="lbl" for="email">Email <span class="req">*</span></label>
+              <input type="email" id="email" name="email" maxlength="100" autocomplete="email" placeholder="nama@email.com">
+              <div class="err"></div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Waktu &amp; meja</legend>
+          <div class="form-grid">
+            <div class="field" data-field="reservation_date">
+              <label class="lbl" for="reservation_date">Tanggal <span class="req">*</span></label>
+              <input type="date" id="reservation_date" name="reservation_date">
+              <div class="err"></div>
+            </div>
+            <div class="field" data-field="start_time">
+              <label class="lbl" for="start_time">Jam mulai <span class="req">*</span></label>
+              <select id="start_time" name="start_time"></select>
+              <div class="hint" id="endHint"></div>
+              <div class="err"></div>
+            </div>
+            <div class="field" data-field="pax">
+              <label class="lbl" for="pax">Jumlah tamu <span class="req">*</span></label>
+              <input type="number" id="pax" name="pax" min="1" max="12" value="2">
+              <div class="err"></div>
+            </div>
+            <div class="field" data-field="area_id">
+              <label class="lbl" for="area_id">Area <span class="req">*</span></label>
+              <select id="area_id" name="area_id"></select>
+              <div class="err"></div>
+            </div>
+            <div class="field full" data-field="dining_table_id">
+              <label class="lbl" for="dining_table_id">Meja <span class="req">*</span></label>
+              <select id="dining_table_id" name="dining_table_id"></select>
+              <div class="hint" id="tableHint">Hanya meja yang kosong dan cukup kapasitasnya yang ditampilkan.</div>
+              <div class="err"></div>
+            </div>
+            <div class="field full" data-field="notes">
+              <label class="lbl" for="notes">Catatan khusus <span class="muted">(opsional)</span></label>
+              <textarea id="notes" name="notes" rows="3" maxlength="200" placeholder="Contoh: kursi bayi, perayaan ulang tahun, tanpa gula."></textarea>
+              <div class="counter"><span id="noteCount">0</span>/200</div>
+              <div class="err"></div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Pre-order menu <span class="muted" style="font:400 .85rem var(--font-body)">(opsional)</span></legend>
+          <div class="menu-cats" id="menuCats"></div>
+          <div class="menu-grid" id="menuGrid"></div>
+        </fieldset>
+
+        <fieldset>
+          <div class="field" data-field="agree">
+            <label class="check" for="agree">
+              <input type="checkbox" id="agree" name="agree">
+              <span>Saya setuju reservasi dibatalkan otomatis bila tidak diverifikasi kasir, dan tamu yang terlambat lebih dari 15 menit ditandai tidak hadir. <span class="req">*</span></span>
+            </label>
+            <div class="err"></div>
+          </div>
+        </fieldset>
+
+        <input type="hidden" name="preorder_json" id="preorder_json" value="[]">
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="btnSubmit">Kirim Reservasi</button>
+          <button type="reset" class="btn btn-outline" id="btnReset">Reset</button>
+          <button type="button" class="btn btn-outline" data-page="denah">Lihat denah</button>
+        </div>
+      </form>
+
+      <!-- ===== HASIL (muncul setelah submit valid) ===== -->
+      <div id="resultBox" class="card success-card" hidden></div>
+
+      <!-- ===== RIWAYAT ===== -->
+      <section class="card history" aria-label="Riwayat reservasi">
+        <h3>Riwayat reservasi (di perangkat ini)</h3>
+        <div id="historyBox"></div>
+      </section>
+    </div>
+
+    <!-- ===== RINGKASAN ===== -->
+    <aside class="card summary" aria-live="polite">
+      <h3>Ringkasan</h3>
+      <div id="sumInfo" class="small muted">Lengkapi data reservasi.</div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:.8rem 0">
+      <strong class="small">Pre-order</strong>
+      <ul class="sum-items" id="sumItems"><li class="muted">Belum ada menu dipilih.</li></ul>
+      <div class="sum-row"><span>Subtotal</span><span id="sSub">Rp 0</span></div>
+      <div class="sum-row"><span>Service (<span id="sSvcRate"></span>%)</span><span id="sSvc">Rp 0</span></div>
+      <div class="sum-row"><span>Pajak (<span id="sTaxRate"></span>%)</span><span id="sTax">Rp 0</span></div>
+      <div class="sum-row total"><span>Estimasi total</span><span id="sTotal">Rp 0</span></div>
+      <p class="hint">Estimasi saja. Tagihan akhir dihitung kasir saat pembayaran.</p>
+    </aside>
+
+  </div>
+</div>

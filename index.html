@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teman Setia - Reservasi Meja &amp; Pesan Menu</title>
+  <meta name="description" content="Cek meja kosong, pesan tempat, dan pilih menu lebih dulu di Teman Setia Surabaya.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="#beranda" data-page="beranda">Teman Setia</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <nav aria-label="Navigasi utama">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#beranda" data-page="beranda" class="active">Beranda</a></li>
+          <li><a href="pages/denah.html" data-page="denah">Denah Meja</a></li>
+          <li><a href="pages/reservasi.html" data-page="reservasi">Reservasi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" aria-live="polite">
+
+    <!-- Konten awal = Beranda -->
+    <div class="container">
+      <section class="hero-box">
+        <h1>Pesan meja, pilih menu, datang tinggal makan.</h1>
+        <p>Cek ketersediaan meja, reservasi online, dan pesan menu lebih dulu dalam satu tempat.</p>
+        <a class="btn btn-light" href="pages/reservasi.html" data-page="reservasi">Reservasi sekarang</a>
+      </section>
+
+      <section class="menu-section">
+        <h2>Daftar menu</h2>
+        <div id="homeMenu"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Teman Setia Surabaya &middot; Buka setiap hari 10.00 - 22.00 WIB</p>
+      <p class="sub">Pembayaran di kasir: tunai, QRIS, debit, atau transfer</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <script src="js/data.js"></script>
+  <script src="js/pages-fallback.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/denah.js"></script>
+  <script src="js/reservasi.js"></script>
+</body>
+</html>
